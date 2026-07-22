@@ -1,6 +1,8 @@
+
 plugins {
     id 'com.android.application'
 }
+def glistAppRelPath = project.hasProperty("glistAppRelPath") ? project.glistAppRelPath:"src/GlistApp"
 
 android {
     namespace 'dev.glist.glistapp'
@@ -9,7 +11,7 @@ android {
     sourceSets {
         main {
             java.srcDirs = ['java', '../../../glistplugins/gipAndroid/java']
-            assets.srcDirs = ['cpp/assets']
+            assets.srcDirs =  ["cpp/${glistAppRelPath}/assets"]
             res.srcDirs = ['res']
             manifest.srcFile 'AndroidManifest.xml'
         }
@@ -25,6 +27,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags '-std=c++14'
+                arguments "-DGLIST_APP_REL_PATH=${glistAppRelPath}"
             }
         }
     }
